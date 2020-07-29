@@ -12,6 +12,7 @@ class CharacterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('name')
             ->add('hp')
             ->add('mana')
             ->add('armor')
@@ -19,6 +20,7 @@ class CharacterType extends AbstractType
             ->add('attack')
             ->add('magicAttack')
             ->add('speed')
+            ->add('description')
             ->add('role', null, ['choice_label' => 'name'])
         ;
     }
