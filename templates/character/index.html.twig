@@ -31,8 +31,8 @@
                 <td>{{ character.magicAttack }}</td>
                 <td>{{ character.speed }}</td>
                 <td>
-                    <a href="{{ path('character_show', {'id': character.id}) }}">show</a>
-                    <a href="{{ path('character_edit', {'id': character.id}) }}">edit</a>
+                    <a href="{{ path('character_show', {'id': character.id}) }}" class="btn btn-info">Détails</a>
+                    <a href="{{ path('character_edit', {'id': character.id}) }}" class="btn btn-info">Editer</a>
                 </td>
             </tr>
         {% else %}
@@ -43,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('character_new') }}">Créer un nouveau personnage</a>
+    <a href="{{ path('character_new') }}" class="btn btn-info">Créer un nouveau personnage</a>
 {% endblock %}

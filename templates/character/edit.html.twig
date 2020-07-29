@@ -3,11 +3,11 @@
 {% block title %}Edit Character{% endblock %}
 
 {% block body %}
-    <h1>Edit Character</h1>
+    <h1>Editer {{ character.name }}</h1>
 
     {{ include('character/_form.html.twig', {'button_label': 'Confirmer'}) }}
 
-    <a href="{{ path('character_index') }}">Retour</a>
+    <a href="{{ path('character_index') }}" class="btn btn-info">Retour</a>
 
     {{ include('character/_delete_form.html.twig') }}
 {% endblock %}

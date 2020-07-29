@@ -17,8 +17,8 @@
             <tr>
                 <td>{{ role.name }}</td>
                 <td>
-                    <a href="{{ path('role_show', {'id': role.id}) }}">show</a>
-                    <a href="{{ path('role_edit', {'id': role.id}) }}">edit</a>
+                    <a href="{{ path('role_show', {'id': role.id}) }}" class="btn btn-info">Détails</a>
+                    <a href="{{ path('role_edit', {'id': role.id}) }}" class="btn btn-info">Editer</a>
                 </td>
             </tr>
         {% else %}
@@ -29,5 +29,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('role_new') }}">Create new</a>
+    <a href="{{ path('role_new') }}" class="btn btn-info">Créer un nouveau rôle</a>
 {% endblock %}
