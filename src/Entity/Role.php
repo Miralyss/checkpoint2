@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\RolesRepository;
+use App\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RolesRepository::class)
+ * @ORM\Entity(repositoryClass=RoleRepository::class)
  */
-class Roles
+class Role
 {
     /**
      * @ORM\Id()
@@ -22,20 +22,10 @@ class Roles
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $assassin;
+    private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mage;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $paladin;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Character::class, mappedBy="roles")
+     * @ORM\OneToMany(targetEntity=Character::class, mappedBy="role")
      */
     private $characters;
 
@@ -49,38 +39,14 @@ class Roles
         return $this->id;
     }
 
-    public function getAssassin(): ?string
+    public function getName(): ?string
     {
-        return $this->assassin;
+        return $this->name;
     }
 
-    public function setAssassin(string $assassin): self
+    public function setName(string $name): self
     {
-        $this->assassin = $assassin;
-
-        return $this;
-    }
-
-    public function getMage(): ?string
-    {
-        return $this->mage;
-    }
-
-    public function setMage(string $mage): self
-    {
-        $this->mage = $mage;
-
-        return $this;
-    }
-
-    public function getPaladin(): ?string
-    {
-        return $this->paladin;
-    }
-
-    public function setPaladin(string $paladin): self
-    {
-        $this->paladin = $paladin;
+        $this->name = $name;
 
         return $this;
     }
@@ -97,7 +63,7 @@ class Roles
     {
         if (!$this->characters->contains($character)) {
             $this->characters[] = $character;
-            $character->addRole($this);
+            $character->setRole($this);
         }
 
         return $this;
@@ -107,7 +73,10 @@ class Roles
     {
         if ($this->characters->contains($character)) {
             $this->characters->removeElement($character);
-            $character->removeRole($this);
+            // set the owning side to null (unless already changed)
+            if ($character->getRole() === $this) {
+                $character->setRole(null);
+            }
         }
 
         return $this;

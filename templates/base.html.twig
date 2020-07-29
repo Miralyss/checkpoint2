@@ -11,17 +11,27 @@
         {% endblock %}
     </head>
     <body>
-    <nav class="navbar navbar-light bg-light" style="height: 100px;">
+    <nav class="navbar navbar-expand-md bg-info mb-3" >
         <a class="navbar-brand" href="#">
-            <i style="color: #444; font-size: 2rem;" class="pb-1 fad fa-cauldron"></i>
-            <p class="pl-2 d-inline font-weight-bold" style="color: #444;">Cauldron Overflow</p>
+            <p class="pl-2 d-inline styleAndColor"">LE DOMAINE</p>
         </a>
-        <button class="btn btn-dark">Sign up</button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('character_index') }}">Personnages <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('role_index') }}">Roles</a>
+                </li>
+            </ul>
+        </div>
+        <a href="{{ path('character_new') }}"><button class="btn btn-dark">Ajouter un nouveau personnage</button></a>
     </nav>
-
-    {% block body %}{% endblock %}
-    <footer class="mt-5 p-3 text-center">
-        Made with <i style="color: red;" class="fa fa-heart"></i> by the guys and gals at <a style="color: #444; text-decoration: underline;" href="https://symfonycasts.com">SymfonyCasts</a>
+    <div class="container-fluid">
+        {% block body %}{% endblock %}
+    </div>
+    <footer class="mt-5 p-3 text-center bg-dark text-light">
+        Made with <i style="color: red;" class="fa fa-heart"></i> by Yoan Duong </a>
     </footer>
     {{ encore_entry_link_tags('app') }}
     {% block javascripts %}{% endblock %}

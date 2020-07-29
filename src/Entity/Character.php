@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CharacterRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,7 +24,7 @@ class Character
     private $hp;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
     private $mana;
 
@@ -56,6 +54,12 @@ class Character
     private $speed;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="characters")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $role;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $description;
@@ -63,18 +67,7 @@ class Character
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Roles;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Roles::class, inversedBy="characters")
-     */
-    private $roles;
-
-    public function __construct()
-    {
-        $this->roles = new ArrayCollection();
-    }
-
+    private $name;
 
     public function getId(): ?int
     {
@@ -98,7 +91,7 @@ class Character
         return $this->mana;
     }
 
-    public function setMana(?int $mana): self
+    public function setMana(int $mana): self
     {
         $this->mana = $mana;
 
@@ -165,6 +158,18 @@ class Character
         return $this;
     }
 
+    public function getRole(): ?Role
+    {
+        return $this->role;
+    }
+
+    public function setRole(?Role $role): self
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
@@ -177,35 +182,15 @@ class Character
         return $this;
     }
 
-    public function getRoles(): ?string
+    public function getName(): ?string
     {
-        return $this->Roles;
+        return $this->name;
     }
 
-    public function setRoles(string $Roles): self
+    public function setName(string $name): self
     {
-        $this->Roles = $Roles;
+        $this->name = $name;
 
         return $this;
     }
-
-    public function addRole(Roles $role): self
-    {
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
-        }
-
-        return $this;
-    }
-
-    public function removeRole(Roles $role): self
-    {
-        if ($this->roles->contains($role)) {
-            $this->roles->removeElement($role);
-        }
-
-        return $this;
-    }
-
-
 }

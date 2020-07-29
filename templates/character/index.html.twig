@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Character index{% endblock %}
+
+{% block body %}
+    <h1>Personnages</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Hp</th>
+                <th>Mana</th>
+                <th>Armor</th>
+                <th>MagicArmor</th>
+                <th>Attack</th>
+                <th>MagicAttack</th>
+                <th>Speed</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for character in characters %}
+            <tr>
+                <td>{{ character.name }}</td>
+                <td>{{ character.hp }}</td>
+                <td>{{ character.mana }}</td>
+                <td>{{ character.armor }}</td>
+                <td>{{ character.magicArmor }}</td>
+                <td>{{ character.attack }}</td>
+                <td>{{ character.magicAttack }}</td>
+                <td>{{ character.speed }}</td>
+                <td>
+                    <a href="{{ path('character_show', {'id': character.id}) }}">show</a>
+                    <a href="{{ path('character_edit', {'id': character.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('character_new') }}">Create new</a>
+{% endblock %}
