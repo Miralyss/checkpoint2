@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CharacterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,6 +64,16 @@ class Character
      * @ORM\Column(type="string", length=255)
      */
     private $Roles;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Roles::class, inversedBy="characters")
+     */
+    private $roles;
+
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -173,6 +185,24 @@ class Character
     public function setRoles(string $Roles): self
     {
         $this->Roles = $Roles;
+
+        return $this;
+    }
+
+    public function addRole(Roles $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+    public function removeRole(Roles $role): self
+    {
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
+        }
 
         return $this;
     }

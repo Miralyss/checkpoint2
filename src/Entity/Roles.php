@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RolesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Roles
      * @ORM\Column(type="string", length=255)
      */
     private $paladin;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Character::class, mappedBy="roles")
+     */
+    private $characters;
+
+    public function __construct()
+    {
+        $this->characters = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,34 @@ class Roles
     public function setPaladin(string $paladin): self
     {
         $this->paladin = $paladin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Character[]
+     */
+    public function getCharacters(): Collection
+    {
+        return $this->characters;
+    }
+
+    public function addCharacter(Character $character): self
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters[] = $character;
+            $character->addRole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacter(Character $character): self
+    {
+        if ($this->characters->contains($character)) {
+            $this->characters->removeElement($character);
+            $character->removeRole($this);
+        }
 
         return $this;
     }
